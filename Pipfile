@@ -5,6 +5,16 @@ name = "pypi"
 
 [packages]
 ipykernel = "*"
+pandas = "*"
+youtube-transcript-api = "*"
+datasets = "*"
+transformers = "*"
+tqdm = "*"
+ipywidgets = "*"
+torch = "*"
+wordcloud = "*"
+matplotlib = "*"
+geopandas = "*"
 
 [dev-packages]
 black = {extras = ["jupyter"], version = "*"}

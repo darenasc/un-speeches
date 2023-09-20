@@ -4,16 +4,6 @@
     "editor.codeActionsOnSave": {
         "source.organizeImports": true
     },
-    "python.linting.pylintEnabled": true,
-    "python.linting.mypyEnabled": true,
-    "python.linting.enabled": true,
-    "python.formatting.provider": "none",
-    "python.linting.mypyArgs": [
-        "--ignore-missing-imports",
-        "--follow-imports=silent",
-        "--show-column-numbers",
-        // "--python-executable=~/.local/share/virtualenvs/..."
-    ],
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
     }
