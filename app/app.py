@@ -1,3 +1,4 @@
+import random
 from pathlib import Path
 from PIL import Image
 
@@ -13,14 +14,18 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-df_speech_url = pd.read_csv(path / "UN Speeches.csv")
+df_speech_url = pd.read_csv(path.parent / "data" / "UN Speeches.csv")
 
 countries = df_speech_url["country"].unique()
-country_option = st.sidebar.selectbox("", sorted(list(countries)))
+country_option = st.sidebar.selectbox(
+    "", sorted(list(countries)), index=random.randint(0, len(df_speech_url))
+)
 
 col1, col2 = st.columns(2)
 with col1:
-    image = Image.open(path / "wordclouds" / f"{country_option}_words.png")
+    image = Image.open(
+        path.parent / "data" / "wordclouds" / f"{country_option}_words.png"
+    )
     st.image(image, caption=f"Wordcloud {country_option}")
 with col2:
     st.video(df_speech_url[df_speech_url["country"] == country_option]["url"].values[0])

@@ -16,6 +16,7 @@ wordcloud = "*"
 matplotlib = "*"
 geopandas = "*"
 streamlit = "*"
+nltk = "*"
 
 [dev-packages]
 black = {extras = ["jupyter"], version = "*"}

@@ -162,6 +162,5 @@ cython_debug/
 # data
 data/masks/*
 data/2023/*
-data/wordclouds/*
 Pipfile.lock
 ne_110m_admin_0*
