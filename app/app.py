@@ -17,9 +17,7 @@ st.set_page_config(
 df_speech_url = pd.read_csv(path.parent / "data" / "UN Speeches.csv")
 
 countries = df_speech_url["country"].unique()
-country_option = st.sidebar.selectbox(
-    "", sorted(list(countries)), index=random.randint(0, len(df_speech_url))
-)
+country_option = st.sidebar.selectbox("", sorted(list(countries)))
 
 col1, col2 = st.columns(2)
 with col1:
