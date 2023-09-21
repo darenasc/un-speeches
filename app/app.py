@@ -80,7 +80,7 @@ country_option = st.sidebar.selectbox("", sorted(list(countries)))
 
 col1, col2 = st.columns(2)
 with col1:
-    number_of_words = st.slider("How namy words?", 10, 200, 40)
+    number_of_words = st.slider("How many words?", 10, 200, 42)
     get_wordcloud(country_option)
 
     image = Image.open(DATA_DIR / "wordclouds" / f"{country_option}_words.png")
