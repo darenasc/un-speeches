@@ -76,15 +76,14 @@ df_speech_url = pd.read_csv(DATA_DIR / "UN Speeches.csv")
 
 countries = df_speech_url["country"].unique()
 country_option = st.sidebar.selectbox("", sorted(list(countries)))
-
+number_of_words = st.sidebar.slider("How many words?", 10, 200, 42)
 
 col1, col2 = st.columns(2)
 with col1:
-    number_of_words = st.slider("How many words?", 10, 200, 42)
     get_wordcloud(country_option)
 
     image = Image.open(DATA_DIR / "wordclouds" / f"{country_option}_words.png")
-    st.image(image, caption=f"Wordcloud {country_option}")
+    st.image(image, caption=f"Wordcloud {country_option}", use_column_width=True)
 
 
 with col2:
