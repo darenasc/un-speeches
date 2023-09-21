@@ -15,6 +15,7 @@ torch = "*"
 wordcloud = "*"
 matplotlib = "*"
 geopandas = "*"
+streamlit = "*"
 
 [dev-packages]
 black = {extras = ["jupyter"], version = "*"}
