@@ -4,7 +4,7 @@ from PIL import Image
 import pandas as pd
 import streamlit as st
 
-path = Path(__file__).absolute()
+path = Path(__file__).absolute().parent
 
 st.set_page_config(
     page_title="UNGA 2023 Speech Analysis App",
