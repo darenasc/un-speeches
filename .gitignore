@@ -160,6 +160,5 @@ cython_debug/
 #.idea/
 
 # data
-data/masks/*
 Pipfile.lock
 ne_110m_admin_0*
