@@ -172,10 +172,12 @@ number_of_words = st.sidebar.slider("How many words?", 10, 200, 42)
 
 col1, col2 = st.columns(2)
 with col1:
-    get_wordcloud(country_option)
-
-    image = Image.open(DATA_DIR / "wordclouds" / f"{country_option}_words.png")
-    st.image(image, caption=f"Wordcloud {country_option}", use_column_width=True)
+    try:
+        get_wordcloud(country_option)
+        image = Image.open(DATA_DIR / "wordclouds" / f"{country_option}_words.png")
+        st.image(image, caption=f"Wordcloud {country_option}", use_column_width=True)
+    except:
+        pass
 
 with col2:
     st.video(df_speech_url[df_speech_url["country"] == country_option]["url"].values[0])

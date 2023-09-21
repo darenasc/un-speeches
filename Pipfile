@@ -17,6 +17,8 @@ matplotlib = "*"
 geopandas = "*"
 streamlit = "*"
 nltk = "*"
+gensim = "*"
+scikit-learn = "*"
 
 [dev-packages]
 black = {extras = ["jupyter"], version = "*"}
