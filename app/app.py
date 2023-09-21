@@ -10,6 +10,20 @@ from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
 from wordcloud import WordCloud, STOPWORDS
 
+# To download data from nltk
+import nltk
+import ssl
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+nltk.download("stopwords")
+nltk.download("wordnet")
+# end download data from nltk
+
 APP_DIR = Path(__file__).absolute().parent
 DATA_DIR = APP_DIR.parent / "data"
 stop = set(stopwords.words("english"))
