@@ -3,6 +3,7 @@ import string
 from pathlib import Path
 from PIL import Image
 
+import geopandas as gpd
 import nltk
 import numpy as np
 import pandas as pd
@@ -245,10 +246,31 @@ st.set_option("deprecation.showPyplotGlobalUse", False)
 
 
 df_speech_url = pd.read_csv(DATA_DIR / "UN Speeches.csv")
+geo_data = gpd.read_file(DATA_DIR / "ne_110m_admin_0_countries.zip")
 
 countries = df_speech_url["country"].unique()
 country_option = st.sidebar.selectbox("", sorted(list(countries)))
 number_of_words = st.sidebar.slider("How many words?", 10, 200, 42)
+
+try:
+    st.sidebar.text(
+        f'{geo_data[geo_data["ADMIN"]==country_option]["CONTINENT"].values[0]}'
+    )
+    st.sidebar.text(
+        f'(Economy) {geo_data[geo_data["ADMIN"]==country_option]["ECONOMY"].values[0].split(". ")[-1]}'
+    )
+    st.sidebar.text(
+        f'(Income group) {geo_data[geo_data["ADMIN"]==country_option]["INCOME_GRP"].values[0].split(". ")[-1]}'
+    )
+    st.sidebar.text(
+        f'Population: {geo_data[geo_data["ADMIN"]==country_option]["POP_EST"].apply(int).values[0]:,} (Est. {geo_data[geo_data["ADMIN"]==country_option]["POP_YEAR"].values[0]})'
+    )
+    st.sidebar.text(
+        f'GDP: USD${geo_data[geo_data["ADMIN"]==country_option]["GDP_MD"].apply(int).values[0]:,}M ({geo_data[geo_data["ADMIN"]==country_option]["GDP_YEAR"].apply(int).values[0]})'
+    )
+
+except:
+    pass
 
 col1, col2 = st.columns(2)
 with col1:
