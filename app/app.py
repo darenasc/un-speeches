@@ -34,6 +34,23 @@ lemma = WordNetLemmatizer()
 stopwords = set(STOPWORDS)
 
 
+def get_video_url(country: str) -> str:
+    if isinstance(
+        df_speech_url[df_speech_url["country"] == country]["start"].values[0], str
+    ):
+        h, m, s = (
+            df_speech_url[df_speech_url["country"] == country]["start"]
+            .values[0]
+            .split(":")
+        )
+        seconds = int(h) * 3600 + int(m) * 60 + int(s)
+        url = f'{df_speech_url[df_speech_url["country"] == country]["url"].values[0]}&t={seconds}s'
+        return url
+    else:
+        url = df_speech_url[df_speech_url["country"] == country]["url"].values[0]
+        return url
+
+
 def clean(doc: str) -> str:
     stop_free = " ".join([i for i in doc.lower().split() if i not in stop])
     punc_free = "".join(ch for ch in stop_free if ch not in exclude)
@@ -41,10 +58,12 @@ def clean(doc: str) -> str:
     return normalized
 
 
-def get_corpus_from_file(country: str, path: Path = DATA_DIR / "2023") -> str:
+def get_corpus_from_file(
+    country: str, start: int = 0, end: int = 3600, path: Path = DATA_DIR / "2023"
+) -> str:
     with open(path / f"{country}.json") as f:
         json_data = json.load(f)
-    corpus = [x["text"] for x in json_data]
+    corpus = [x["text"] for x in json_data if x["start"] > start and x["start"] < end]
     large_corpus = " ".join([x for x in corpus])
     return large_corpus
 
@@ -59,6 +78,38 @@ def get_wordcloud(country_option: str):
         contour_width=3,
         contour_color="steelblue",
     )
+
+    if isinstance(
+        df_speech_url[df_speech_url["country"] == country_option]["start"], str
+    ) and isinstance(
+        df_speech_url[df_speech_url["country"] == country_option]["end"], str
+    ):
+        h_start, m_start, s_start = (
+            df_speech_url[df_speech_url["country"] == country_option]["start"]
+            .values[0]
+            .split(":")
+        )
+        start = int(h_start) * 60 * 60 + int(m_start) * 60 + int(s_start)
+        h_end, m_end, s_end = (
+            df_speech_url[df_speech_url["country"] == country_option]["end"]
+            .values[0]
+            .split(":")
+        )
+        end = int(h_end) * 60 * 60 + int(m_end) * 60 + int(s_end)
+        corpus = get_corpus_from_file(country_option, start=start, end=end)
+    elif isinstance(
+        df_speech_url[df_speech_url["country"] == country_option]["start"], str
+    ):
+        h, m, s = (
+            df_speech_url[df_speech_url["country"] == country_option]["start"]
+            .values[0]
+            .split(":")
+        )
+        start = int(h) * 60 * 60 + int(m) * 60 + int(s)
+        corpus = get_corpus_from_file(country_option, start=start)
+    else:
+        corpus = get_corpus_from_file(country_option)
+
     corpus = get_corpus_from_file(country_option)
     corpus = clean(corpus)
     wc.generate(corpus)
@@ -156,6 +207,8 @@ def plot_top_n_words(country_option: str, top_n_words: int = 20):
     return
 
 
+### App ###
+
 st.set_page_config(
     page_title="UNGA78 Speech Analysis App",
     layout="wide",
@@ -180,7 +233,7 @@ with col1:
         pass
 
 with col2:
-    st.video(df_speech_url[df_speech_url["country"] == country_option]["url"].values[0])
+    st.video(get_video_url(country_option))
 
 col3, col4 = st.columns(2)
 with col3:
