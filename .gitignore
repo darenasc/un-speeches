@@ -160,5 +160,6 @@ cython_debug/
 #.idea/
 
 # data
+data/wordclouds
 Pipfile.lock
 ne_110m_admin_0*
