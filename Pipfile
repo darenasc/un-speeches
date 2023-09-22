@@ -19,6 +19,7 @@ streamlit = "*"
 nltk = "*"
 gensim = "*"
 scikit-learn = "*"
+requests = "*"
 
 [dev-packages]
 black = {extras = ["jupyter"], version = "*"}
