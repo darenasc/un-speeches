@@ -35,6 +35,14 @@ stopwords = set(STOPWORDS)
 
 
 def get_video_url(country: str) -> str:
+    """Generate a url with the exact time when the leader start their speech.
+
+    Args:
+        country (str): Speaker's country.
+
+    Returns:
+        str: A youtube url.
+    """
     if isinstance(
         df_speech_url[df_speech_url["country"] == country]["start"].values[0], str
     ):
@@ -52,6 +60,14 @@ def get_video_url(country: str) -> str:
 
 
 def clean(doc: str) -> str:
+    """Cleans the passed string. Apply lowercase, remove stopwords and punctuation and lemmatize the string.
+
+    Args:
+        doc (str): A string to be cleaned.
+
+    Returns:
+        str: A cleaned string.
+    """
     stop_free = " ".join([i for i in doc.lower().split() if i not in stop])
     punc_free = "".join(ch for ch in stop_free if ch not in exclude)
     normalized = " ".join(lemma.lemmatize(word) for word in punc_free.split())
@@ -61,6 +77,17 @@ def clean(doc: str) -> str:
 def get_corpus_from_file(
     country: str, start: int = 0, end: int = 3600, path: Path = DATA_DIR / "2023"
 ) -> str:
+    """Returns a string with the transcript of a video.
+
+    Args:
+        country (str): Country of origin.
+        start (int, optional): Second when the speaker starts speaking. Defaults to 0.
+        end (int, optional): Second when the speaking finish speaking. Defaults to 3600.
+        path (Path, optional): Path where the transcripts are stored. Defaults to DATA_DIR/"2023".
+
+    Returns:
+        str: A string with the transcript of a video.
+    """
     with open(path / f"{country}.json") as f:
         json_data = json.load(f)
     corpus = [x["text"] for x in json_data if x["start"] > start and x["start"] < end]
