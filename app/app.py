@@ -286,7 +286,15 @@ with col2:
 
 col3, col4 = st.columns(2)
 with col3:
-    plot_freq_words(country_option, top_n_words=25)
+    try:
+        plot_freq_words(country_option, top_n_words=25)
+    except:
+        st.write("No transcript available :'(")
+        pass
 
 with col4:
-    plot_top_n_words(country_option, top_n_words=25)
+    try:
+        plot_top_n_words(country_option, top_n_words=25)
+    except:
+        st.write("No transcript available :'(")
+        pass
