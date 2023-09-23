@@ -2,7 +2,7 @@ from pathlib import Path
 
 from streamlit import components
 
-APP_DIR = Path(__file__).absolute().parent
+APP_DIR = Path(__file__).absolute().parent.parent
 DATA_DIR = APP_DIR.parent / "data"
 
 with open(APP_DIR / "pages" / "lda.html", "r") as f:
