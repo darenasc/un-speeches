@@ -96,6 +96,22 @@ def get_corpus_from_file(
     return large_corpus
 
 
+def filter_words(corpus: str):
+    words_filter = [
+        "excellency",
+        "assembly",
+        "president",
+        "mr",
+        "weve",
+        "also",
+        "uh",
+    ]
+    filtered_corpus = " ".join(
+        [x for x in corpus.split(" ") if x not in words_filter and len(x) > 1]
+    )
+    return filtered_corpus
+
+
 def get_wordcloud(country_option: str):
     country_mask = np.array(Image.open(DATA_DIR / "masks" / f"{country_option}.jpg"))
     wc = WordCloud(
@@ -140,6 +156,7 @@ def get_wordcloud(country_option: str):
 
     corpus = get_corpus_from_file(country_option)
     corpus = clean(corpus)
+    corpus = filter_words(corpus)
     wc.generate(corpus)
     wc.to_file(DATA_DIR / "wordclouds" / f"{country_option}_words.png")
 
@@ -191,6 +208,7 @@ def dispersion_plot(text, words, ignore_case=False, title="Lexical Dispersion Pl
 def plot_freq_words(country_option: str, top_n_words: int = 20):
     corpus = get_corpus_from_file(country_option)
     corpus = clean(corpus)
+    corpus = filter_words(corpus)
 
     tokenizer = RegexpTokenizer(r"\w+")
     tokens = tokenizer.tokenize(corpus.lower())
@@ -212,6 +230,7 @@ def plot_freq_words(country_option: str, top_n_words: int = 20):
 def plot_top_n_words(country_option: str, top_n_words: int = 20):
     corpus = get_corpus_from_file(country_option)
     corpus = clean(corpus)
+    corpus = filter_words(corpus)
 
     tokenizer = RegexpTokenizer(r"\w+")
     tokens = tokenizer.tokenize(corpus.lower())

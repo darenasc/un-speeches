@@ -20,6 +20,7 @@ nltk = "*"
 gensim = "*"
 scikit-learn = "*"
 requests = "*"
+pyldavis = "*"
 
 [dev-packages]
 black = {extras = ["jupyter"], version = "*"}
