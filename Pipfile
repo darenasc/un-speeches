@@ -21,6 +21,7 @@ gensim = "*"
 scikit-learn = "*"
 requests = "*"
 pyldavis = "*"
+unga-speeches = {editable = true, path = "."}
 
 [dev-packages]
 black = {extras = ["jupyter"], version = "*"}
