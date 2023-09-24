@@ -154,7 +154,7 @@ def get_wordcloud(country_option: str):
     else:
         corpus = get_corpus_from_file(country_option)
 
-    corpus = get_corpus_from_file(country_option)
+    # corpus = get_corpus_from_file(country_option)
     corpus = clean(corpus)
     corpus = filter_words(corpus)
     wc.generate(corpus)
