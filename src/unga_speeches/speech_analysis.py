@@ -241,6 +241,7 @@ def filter_words(corpus: str):
         "weve",
         "also",
         "uh",
+        "000",
     ]
     filtered_corpus = " ".join(
         [x for x in corpus.split(" ") if x not in words_filter and len(x) > 1]
