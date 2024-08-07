@@ -3,6 +3,7 @@ from PIL import Image
 from random import randrange
 
 import geopandas as gpd
+import matplotlib.pyplot as plt
 import nltk
 import pandas as pd
 import streamlit as st
@@ -32,7 +33,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-st.set_option("deprecation.showPyplotGlobalUse", False)
 
 
 df_speech_url = pd.read_csv(DATA_DIR / "UN Speeches.csv")
@@ -91,7 +91,10 @@ with col3:
 
 with col4:
     try:
-        st.pyplot(sa.plot_top_n_words(country_option, top_n_words=25))
+        plot = sa.plot_top_n_words(country_option, top_n_words=25)
+        fig = plt.gcf()
+        ax = plt.gca()
+        st.pyplot(fig)
     except:
         st.write("No transcript available :'(")
         pass
